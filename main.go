@@ -14,6 +14,7 @@ func main() {
 	// database.DbMigrateFreshSeed()
 	route := gin.Default()
 	api := route.Group("/api")
+	api.GET("/hello", controllers.Hello)
 
 	api.POST("/login", controllers.Login)
 	api.GET("/logout", controllers.Logout)

@@ -23,6 +23,11 @@ func constDepartement() *DepartementController {
 	return &DepartementController{DepartementService}
 }
 
+func Hello(res *gin.Context) {
+
+	res.String(201, "Hello Aplikasi Absensi Fendi Ray")
+}
+
 func GetAllDepartement(res *gin.Context) {
 	Departement, err := constDepartement().DepartementService.FindAll()
 	if err != nil {

@@ -81,6 +81,12 @@ func DbSetup() (*gorm.DB, error) {
 	if errenv != nil {
 		log.Fatal("Error loading .env file")
 	}
+	// dbHost := os.Getenv("DB_HOST")
+	// dbUser := os.Getenv("DB_USER")
+	// dbPass := os.Getenv("DB_PASSWORD")
+	// dbName := os.Getenv("DB_NAME")
+	// dbPort := os.Getenv("DB_PORT")
+
 	dbHost := os.Getenv("DB_HOST_SERVER")
 	dbUser := os.Getenv("DB_USER_SERVER")
 	dbPass := os.Getenv("DB_PASSWORD_SERVER")
