@@ -1,23 +1,45 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"log"
+	"net/http"
+	"os"
+	"strconv"
 
 	"github.com/fendilaw41/absensifendiray/app/controllers"
 	"github.com/fendilaw41/absensifendiray/config/database"
 	"github.com/fendilaw41/absensifendiray/config/database/seeds"
 	"github.com/fendilaw41/absensifendiray/config/middleware"
+	"github.com/joho/godotenv"
 
 	"github.com/gin-gonic/gin"
 )
 
 // test deploy
 func main() {
+	errenv := godotenv.Load(".env")
+	if errenv != nil {
+		log.Fatal("Error loading .env file")
+	}
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
+
+	tStr := os.Getenv("REPEAT")
+	repeat, err := strconv.Atoi(tStr)
+	if err != nil {
+		log.Printf("Error converting $REPEAT to an int: %q - Using default\n", err)
+		repeat = 5
+	}
 	database.ConfigDB()
 	// database.DbMigrateFreshSeed()
 	route := gin.Default()
 
+	route.GET("/repeat", repeatHandler(repeat))
 	route.GET("/seeder", RunSeeder())
 	route.GET("/migration", RunMigration())
 
@@ -77,7 +99,7 @@ func main() {
 	api.PUT("/aktifitas/:id", middleware.Auth(), controllers.UpdateAktifitas)
 	api.DELETE("/aktifitas/:id", middleware.Auth(), controllers.DeleteAktifitas)
 
-	route.Run() // PORT 8080
+	route.Run(":" + port) // PORT 8080
 }
 
 func RunSeeder() gin.HandlerFunc {
@@ -97,5 +119,15 @@ func RunMigration() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		database.DbMigrateFresh()
 		ctx.JSON(200, "=======Migration table sukses=======")
+	}
+}
+
+func repeatHandler(r int) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var buffer bytes.Buffer
+		for i := 0; i < r; i++ {
+			buffer.WriteString("Hello from Go!\n")
+		}
+		c.String(http.StatusOK, buffer.String())
 	}
 }
