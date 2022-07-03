@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// test deploy
 func main() {
 	database.ConfigDB()
 	// database.DbMigrateFreshSeed()
