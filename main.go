@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/fendilaw41/absensifendiray/app/controllers"
-	"github.com/fendilaw41/absensifendiray/config/database"
 	"github.com/fendilaw41/absensifendiray/config/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -10,7 +9,7 @@ import (
 
 // test deploy
 func main() {
-	database.ConfigDB()
+	// database.ConfigDB()
 	// database.DbMigrateFreshSeed()
 	route := gin.Default()
 	api := route.Group("/api")
