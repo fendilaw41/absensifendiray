@@ -36,16 +36,14 @@ func main() {
 		repeat = 5
 	}
 	database.ConfigDB()
-	// database.DbMigrateFreshSeed()
 	route := gin.Default()
 
 	route.GET("/repeat", repeatHandler(repeat))
 	route.GET("/seeder", RunSeeder())
 	route.GET("/migration", RunMigration())
+	route.GET("/", controllers.Hello)
 
 	api := route.Group("/api")
-	api.GET("/", controllers.Hello)
-
 	api.POST("/login", controllers.Login)
 	api.GET("/logout", controllers.Logout)
 	api.POST("/register", controllers.Signup)
