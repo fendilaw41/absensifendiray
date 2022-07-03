@@ -1,0 +1,23 @@
+TODO: Cara Jalankan Golang diatas nodemon PORT 8080
+Cara Jalankan Golang diatas nodemon (install terlebih dahulu nodemon) => npm install -g nodemon
+lalu ketikan nodemon --exec "go run" main.go
+
+TODO: Migrasi table
+Cara MigrateFresh database dengan uncomment database.DbMigrateFreshSeed() pada file main.go baris 13
+lalu ketikan
+nodemon --exec "go run" main.go seed
+
+TODO: Kembalikan lagi
+kemudian kembalikan seperti dengan comment database.DbMigrateFreshSeed() pada file main.go baris 13
+lalu ketikan 
+nodemon --exec "go run" main.go
+
+TODO: Running biasa PORT 8080
+jika running biasa ketikan
+go run main.go
+
+Langkah-Langkah 
+1. Golang versi terbaru 1.18
+2. Buat database postgresSQL dengan nama "github.com/fendilaw41/absensifendiray" dapat dilihat pada config/database/config.go
+3. kemudian jalankan migration dan seeder
+4. buka postman, import collection ada di folder documentasi
