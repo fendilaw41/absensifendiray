@@ -1,8 +1,12 @@
 package main
 
 import (
+	"fmt"
+	"log"
+
 	"github.com/fendilaw41/absensifendiray/app/controllers"
 	"github.com/fendilaw41/absensifendiray/config/database"
+	"github.com/fendilaw41/absensifendiray/config/database/seeds"
 	"github.com/fendilaw41/absensifendiray/config/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -13,6 +17,10 @@ func main() {
 	database.ConfigDB()
 	// database.DbMigrateFreshSeed()
 	route := gin.Default()
+
+	route.GET("/seeder", RunSeeder())
+	route.GET("/migration", RunMigration())
+
 	api := route.Group("/api")
 	api.GET("/hello", controllers.Hello)
 
@@ -70,4 +78,24 @@ func main() {
 	api.DELETE("/aktifitas/:id", middleware.Auth(), controllers.DeleteAktifitas)
 
 	route.Run() // PORT 8080
+}
+
+func RunSeeder() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		database.DbMigrateFresh()
+		db, err := database.DbSetup()
+		if err != nil {
+			log.Fatalf("Error opening DB: %v", err)
+		}
+		seeds.Execute(db, "seeder sukses")
+		fmt.Println("=======Seeders Success=======")
+		ctx.JSON(200, "=======Migration Seeder table sukses=======")
+	}
+}
+
+func RunMigration() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		database.DbMigrateFresh()
+		ctx.JSON(200, "=======Migration table sukses=======")
+	}
 }
