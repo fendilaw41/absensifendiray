@@ -37,25 +37,8 @@ func DatabaseMigration() {
 func DbMigrateFresh() {
 	DropMigration()
 	DatabaseMigration()
-	// DatabaseSeeder()
-}
 
-// func DatabaseSeeder() {
-// 	flag.Parse()
-// 	args := flag.Args()
-// 	if len(args) >= 1 {
-// 		switch args[0] {
-// 		case "seed":
-// 			db, err := DbSetup()
-// 			if err != nil {
-// 				log.Fatalf("Error opening DB: %v", err)
-// 			}
-// 			seeds.Execute(db, args[1:]...)
-// 			os.Exit(0)
-// 			fmt.Println("=======Seeders Success=======")
-// 		}
-// 	}
-// }
+}
 
 func DropMigration() {
 	conn, err := DbSetup()
@@ -78,19 +61,6 @@ func DbSetup() (*gorm.DB, error) {
 	if errenv != nil {
 		log.Fatal("Error loading .env file")
 	}
-	// dbHost := os.Getenv("DB_HOST")
-	// dbUser := os.Getenv("DB_USER")
-	// dbPass := os.Getenv("DB_PASSWORD")
-	// dbName := os.Getenv("DB_NAME")
-	// dbPort := os.Getenv("DB_PORT")
-
-	// dbHost := os.Getenv("DB_HOST_SERVER")
-	// dbUser := os.Getenv("DB_USER_SERVER")
-	// dbPass := os.Getenv("DB_PASSWORD_SERVER")
-	// dbName := os.Getenv("DB_NAME_SERVER")
-	// dbPort := os.Getenv("DB_PORT_SERVER")
-
-	// dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable ", dbHost, dbUser, dbPass, dbName, dbPort)
 	dsn := os.Getenv("DATABASE_URL")
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
