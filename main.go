@@ -44,7 +44,7 @@ func main() {
 	route.GET("/migration", RunMigration())
 
 	api := route.Group("/api")
-	api.GET("/hello", controllers.Hello)
+	api.GET("/", controllers.Hello)
 
 	api.POST("/login", controllers.Login)
 	api.GET("/logout", controllers.Logout)
