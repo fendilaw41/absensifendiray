@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/fendilaw41/absensifendiray/app/controllers"
+	"github.com/fendilaw41/absensifendiray/config/database"
 	"github.com/fendilaw41/absensifendiray/config/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -9,7 +10,7 @@ import (
 
 // test deploy
 func main() {
-	// database.ConfigDB()
+	database.ConfigDB()
 	// database.DbMigrateFreshSeed()
 	route := gin.Default()
 	api := route.Group("/api")
@@ -46,7 +47,7 @@ func main() {
 	api.PUT("/divisi/:id", middleware.Auth(), controllers.UpdateDivisi)
 	api.DELETE("/divisi/:id", middleware.Auth(), controllers.DeleteDivisi)
 	// # Departement
-	api.GET("/departement", middleware.Auth(), controllers.GetAllDepartement)
+	api.GET("/departement", controllers.GetAllDepartement)
 	api.GET("/departement_paginate", middleware.Auth(), controllers.GetAllDepartementPaginate)
 	api.GET("/departement/:id", middleware.Auth(), controllers.GetDetailDepartement)
 	api.POST("/departement", middleware.Auth(), controllers.StoreDepartement)
